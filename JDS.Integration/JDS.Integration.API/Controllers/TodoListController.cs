@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Package.AAD.Security.Services;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace JDS.Integration.API.Controllers
 {
@@ -15,10 +17,12 @@ namespace JDS.Integration.API.Controllers
         private static readonly Dictionary<int, Todo> TodoStore = new Dictionary<int, Todo>();
 
         private readonly IHttpContextAccessor _contextAccessor;
+        private readonly IGraphService _graphService;
 
-        public TodoListController(IHttpContextAccessor contextAccessor)
+        public TodoListController(IHttpContextAccessor contextAccessor, IGraphService graphService)
         {
             this._contextAccessor = contextAccessor;
+            _graphService = graphService;
 
             // Pre-populate with sample data
             if (TodoStore.Count == 0)
@@ -31,9 +35,10 @@ namespace JDS.Integration.API.Controllers
         // GET: api/values
         [HttpGet]
         [Authorize(Policy = "ReadScope")]
-        public IEnumerable<Todo> Get()
+        public async Task<IEnumerable<Todo>> Get()
         {
             string owner = User.Identity.Name;
+            var users = await _graphService.GetAllUsers();
             return TodoStore.Values.Where(x => x.Owner == owner);
         }
 

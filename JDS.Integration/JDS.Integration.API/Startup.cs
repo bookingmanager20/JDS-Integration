@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
+using Package.AAD.Security;
+using Package.AAD.Security.Services;
 
 namespace JDS.Integration.API
 {
@@ -45,6 +47,10 @@ namespace JDS.Integration.API
                 options.AddPolicy("ReadScope",
                     policy => policy.Requirements.Add(new ScopesRequirement("read")));
             });
+
+            services.Configure<GraphApiSetting>(Configuration.GetSection("GraphApiSetting"));
+            services.AddScoped<IGraphServiceClientProvider, GraphServiceClientProvider>();
+            services.AddScoped<IGraphService, GraphService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

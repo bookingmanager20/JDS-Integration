@@ -8,5 +8,9 @@
     <PackageReference Include="Microsoft.Identity.Web" Version="1.4.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Package.AAD.Security\Package.AAD.Security.csproj" />
+  </ItemGroup>
+
 
 </Project>

@@ -46,6 +46,8 @@ namespace JDS.Integration.API
                 // Create policy to check for the scope 'read'
                 options.AddPolicy("ReadScope",
                     policy => policy.Requirements.Add(new ScopesRequirement("read")));
+                options.AddPolicy("WriteScope",
+                    policy => policy.Requirements.Add(new ScopesRequirement("write")));
             });
 
             services.Configure<GraphApiSetting>(Configuration.GetSection("GraphApiSetting"));

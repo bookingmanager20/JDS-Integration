@@ -17,7 +17,7 @@ namespace JDS.Integration.Web.Controllers
         }
 
         // GET: TodoList
-        [AuthorizeForScopes(ScopeKeySection = "TodoList:TodoListScope")]
+        [AuthorizeForScopes(Scopes = new string[]{ "https://JustTestB2C.onmicrosoft.com/api/write", "https://JustTestB2C.onmicrosoft.com/api/read"})]
         public async Task<ActionResult> Index()
         {
             return View(await _todoListService.GetAsync());
@@ -30,6 +30,7 @@ namespace JDS.Integration.Web.Controllers
         }
 
         // GET: TodoList/Create
+        [AuthorizeForScopes(ScopeKeySection = "TodoList:TodoListWriteScope")]
         public ActionResult Create()
         {
             Todo todo = new Todo() { Owner = HttpContext.User.Identity.Name };

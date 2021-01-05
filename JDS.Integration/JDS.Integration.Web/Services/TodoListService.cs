@@ -30,6 +30,7 @@ namespace JDS.Integration.Web.Services
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly HttpClient _httpClient;
         private readonly string _TodoListScope = string.Empty;
+        private readonly string _TodoListWriteScope = string.Empty;
         private readonly string _TodoListBaseAddress = string.Empty;
         private readonly ITokenAcquisition _tokenAcquisition;
 
@@ -39,6 +40,7 @@ namespace JDS.Integration.Web.Services
             _tokenAcquisition = tokenAcquisition;
             _contextAccessor = contextAccessor;
             _TodoListScope = configuration["TodoList:TodoListScope"];
+            _TodoListWriteScope = configuration["TodoList:TodoListWriteScope"];
             _TodoListBaseAddress = configuration["TodoList:TodoListBaseAddress"];
         }
 
@@ -114,7 +116,7 @@ namespace JDS.Integration.Web.Services
 
         private async Task PrepareAuthenticatedClient()
         {
-            var accessToken = await _tokenAcquisition.GetAccessTokenForUserAsync(new[] { _TodoListScope });
+            var accessToken = await _tokenAcquisition.GetAccessTokenForUserAsync(new[] { _TodoListScope, _TodoListWriteScope });
             Debug.WriteLine($"access token-{accessToken}");
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

@@ -40,7 +40,7 @@ namespace JDS.Integration.Web
             services.AddOptions();
 
             services.AddMicrosoftIdentityWebAppAuthentication(Configuration, "AzureAdB2C")
-                    .EnableTokenAcquisitionToCallDownstreamApi(new string[] { Configuration["TodoList:TodoListScope"] })
+                    .EnableTokenAcquisitionToCallDownstreamApi(new string[] { Configuration["TodoList:TodoListScope"], Configuration["TodoList:TodoListWriteScope"] })
                     .AddInMemoryTokenCaches();
 
             // Add APIs

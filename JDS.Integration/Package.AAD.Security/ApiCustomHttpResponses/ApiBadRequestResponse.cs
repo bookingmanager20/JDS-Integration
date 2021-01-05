@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Api.Safe.Well.ApiCustomHttpResponses
+namespace Package.AAD.Security.ApiCustomHttpResponses
 {
     public class ApiBadRequestResponse : ApiResponse
     {

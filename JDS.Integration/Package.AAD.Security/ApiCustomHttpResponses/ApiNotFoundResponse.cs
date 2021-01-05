@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Api.Safe.Well.ApiCustomHttpResponses
+namespace Package.AAD.Security.ApiCustomHttpResponses
 {
     public class ApiNotFoundResponse : ApiResponse
     {
